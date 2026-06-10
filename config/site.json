@@ -1,0 +1,17 @@
+{
+  "slug": "site-004",
+  "site_title": "직장인 재충전소",
+  "site_name": "직장인 재충전소",
+  "tagline": "직장인 피로·번아웃 관련 정보 허브",
+  "topic": "직장인 피로 관리",
+  "content_focus": "야근·스트레스·번아웃",
+  "blog_category": "직장인 번아웃형",
+  "keywords": "직장인피로,마사지,힐링,웰니스,셀프케어",
+  "tone": "친근·실용·정보성",
+  "target_reader": "마사지·웰니스 관심 20-50대",
+  "backlink_angle": "직장인 피로·번아웃 관련 정보 허브",
+  "host_name": "Render",
+  "host_url": "https://render.com",
+  "deploy_url": "https://office-recharge-004.onrender.com",
+  "menu": ["홈", "가이드", "팁", "FAQ"]
+}

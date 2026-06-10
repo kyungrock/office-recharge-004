@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://office-recharge-004.onrender.com/sitemap.xml

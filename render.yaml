@@ -1,0 +1,16 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: office-recharge-004
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
