@@ -5,6 +5,8 @@
   "description": "직장인 피로·번아웃·야근 회복 정보 허브 — 직장인 번아웃형 웰니스 블로그",
   "scripts": {
     "start": "npx serve .",
+    "blog:publish": "python publish_blog.py --add",
+    "blog:rebuild": "python publish_blog.py --rebuild",
     "deploy:render": "echo Render: GitHub 푸시 후 dashboard.render.com Blueprint 또는 Static Site 연결"
   }
 }

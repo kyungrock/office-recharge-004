@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>블로그 글쓰기 — 직장인 재충전소</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <div class="page">
+    <header class="topbar topbar--inner">
+      <a class="logo" href="index.html">
+        <span class="logo-b">재</span><span class="logo-g">충</span><span class="logo-e">전</span><span class="logo-rest">소</span>
+      </a>
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="topnav">메뉴</button>
+      <nav class="topbar-nav" id="topnav" aria-label="주요 메뉴">
+        <a href="index.html">홈</a>
+        <a href="blog.html">블로그</a>
+        <a href="guide.html">가이드</a>
+        <a href="tips.html">팁</a>
+        <a href="faq.html">FAQ</a>
+        <a href="blog-write.html" aria-current="page">글쓰기</a>
+      </nav>
+    </header>
+
+    <main id="main" class="content-area write-layout">
+      <nav class="breadcrumb"><a href="index.html">홈</a> › <a href="blog.html">블로그</a> › 글쓰기</nav>
+      <h1 class="page-title">블로그 글쓰기</h1>
+      <p class="page-lead">작성 후 <strong>blog-draft.json</strong>을 다운로드하고, 프로젝트 폴더에서 <code>python publish_blog.py --add</code>로 게시합니다.</p>
+
+      <div class="write-grid">
+        <form id="write-form" class="write-form">
+          <label class="write-field">
+            <span>제목 *</span>
+            <input type="text" id="post-title" name="title" required placeholder="예: 야근 후 10분 재충전 루틴" />
+          </label>
+
+          <label class="write-field">
+            <span>글 ID (URL)</span>
+            <input type="text" id="post-id" name="id" placeholder="자동 생성 — 영문-하이픈" pattern="[a-z0-9-]+" />
+          </label>
+
+          <label class="write-field">
+            <span>날짜 *</span>
+            <input type="date" id="post-date" name="date" required />
+          </label>
+
+          <label class="write-field">
+            <span>요약 (lead) *</span>
+            <textarea id="post-lead" name="lead" rows="2" required placeholder="목록·상단에 보이는 한 줄 소개"></textarea>
+          </label>
+
+          <label class="write-field">
+            <span>SEO 설명</span>
+            <textarea id="post-description" name="description" rows="2" placeholder="비우면 lead에서 자동 생성"></textarea>
+          </label>
+
+          <label class="write-field">
+            <span>breadcrumb 라벨</span>
+            <input type="text" id="post-breadcrumb" name="breadcrumb" placeholder="비우면 제목 사용" />
+          </label>
+
+          <label class="write-field">
+            <span>본문 *</span>
+            <div class="write-toolbar" role="toolbar" aria-label="본문 편집 도구">
+              <button type="button" class="btn btn-outline btn-sm" id="btn-insert-link">링크 삽입</button>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-wrap-link">선택 텍스트에 링크</button>
+            </div>
+            <div class="write-link-panel" id="link-panel" hidden>
+              <label class="write-field" style="margin:0">
+                <span>링크에 보일 글자 (앵커)</span>
+                <input type="text" id="link-text" placeholder="예: 재충전소, 서울출장마사지" />
+              </label>
+              <label class="write-field" style="margin:0">
+                <span>URL</span>
+                <input type="url" id="link-url" placeholder="https://..." />
+              </label>
+              <div class="write-actions" style="margin:0">
+                <button type="button" class="btn btn-primary btn-sm" id="btn-confirm-link">본문에 넣기</button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-cancel-link">취소</button>
+              </div>
+            </div>
+            <textarea id="post-body" name="body" rows="16" required placeholder="문장 안에 링크 넣기 예시:&#10;직장인 [[재충전소|https://office-recharge-004.onrender.com]] 에서 더 많은 글을 볼 수 있어요.&#10;&#10;또는 [재충전소](https://office-recharge-004.onrender.com)&#10;또는 https://example.com (자동 링크)&#10;&#10;## 소제목&#10;**굵게** · - 목록"></textarea>
+          </label>
+
+          <div class="write-help">
+            <p><strong>링크 넣는 방법 (3가지)</strong></p>
+            <ul>
+              <li><strong>버튼</strong> — 「링크 삽입」클릭 → 글자·URL 입력 → 「본문에 넣기」</li>
+              <li><code>[[재충전소|https://url]]</code> — 추천 (한글 앵커 쉬움)</li>
+              <li><code>[재충전소](https://url)</code> — 마크다운 방식</li>
+            </ul>
+            <p><strong>기타 문법</strong> <code>## 제목</code> · <code>**굵게**</code> · <code>- 목록</code> · <code>:::warn</code></p>
+          </div>
+
+          <div class="write-actions">
+            <button type="button" class="btn btn-outline" id="btn-preview">미리보기 갱신</button>
+            <button type="submit" class="btn btn-primary">blog-draft.json 다운로드</button>
+          </div>
+          <p id="save-status" class="write-status" role="status"></p>
+        </form>
+
+        <aside class="write-preview-wrap">
+          <p class="section-label">미리보기</p>
+          <div id="preview" class="write-preview content-area" style="padding:0;"></div>
+        </aside>
+      </div>
+
+      <section class="write-steps">
+        <h2>게시 순서 · 파일 위치</h2>
+
+        <p class="write-steps-lead">프로젝트 루트 (이 사이트 폴더):</p>
+        <pre class="write-path"><code>D:\경락\커서\site setting\300site\4start</code></pre>
+
+        <ol>
+          <li>
+            <strong>글 작성</strong> — 이 페이지에서 작성 후 <strong>blog-draft.json 다운로드</strong>
+            <ul>
+              <li>저장 위치: <code>C:\Users\본인이름\Downloads\blog-draft.json</code> (기본 다운로드 폴더)</li>
+              <li>파일을 직접 옮길 필요 없음 — <code>publish_blog.py</code>가 Downloads에서 자동으로 찾습니다</li>
+            </ul>
+          </li>
+          <li>
+            <strong>게시 명령 실행</strong> — PowerShell에서 프로젝트 폴더로 이동 후 실행:
+            <pre class="write-cmd"><code>cd "D:\경락\커서\site setting\300site\4start"
+python publish_blog.py --add</code></pre>
+            <ul>
+              <li>draft가 다른 곳에 있으면: <code>python publish_blog.py --add --draft "경로\blog-draft.json"</code></li>
+            </ul>
+          </li>
+          <li>
+            <strong>자동 생성·수정되는 파일</strong> (위 폴더 안)
+            <ul>
+              <li><code>data\blog-posts.json</code> — 글 목록 원본 (draft 병합)</li>
+              <li><code>blog\{글ID}.html</code> — 글 상세 페이지 (예: <code>blog\after-overtime.html</code>)</li>
+              <li><code>blog.html</code> — 블로그 목록</li>
+              <li><code>sitemap.xml</code> — 검색엔진용 URL 목록</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Render 배포</strong> — 같은 프로젝트 폴더에서 Git 푸시:
+            <pre class="write-cmd"><code>cd "D:\경락\커서\site setting\300site\4start"
+git add .
+git commit -m "블로그 추가"
+git push</code></pre>
+            <ul>
+              <li>푸시 후 Render가 자동 배포 → <a href="https://office-recharge-004.onrender.com" rel="noopener noreferrer">office-recharge-004.onrender.com</a></li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>폴더 구조 요약</h3>
+        <pre class="write-tree"><code>4start\
+├── blog-write.html      ← 글 쓰는 페이지 (지금 여기)
+├── publish_blog.py      ← 게시 스크립트
+├── data\
+│   └── blog-posts.json  ← 글 데이터
+├── blog\
+│   └── {글ID}.html      ← 생성된 글
+├── blog.html            ← 블로그 목록
+└── sitemap.xml</code></pre>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-copy">© 직장인 재충전소 · site-004 · Render</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/blog-write.js"></script>
+</body>
+</html>
